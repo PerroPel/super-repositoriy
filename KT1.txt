@@ -1,0 +1,148 @@
+using System;
+
+namespace VvguHomework
+{
+    // Задание 1
+    public class Book
+    {
+        public string Title; // поле
+        private int _pages; // поле
+
+        public int Pages // свойство
+        {
+            get { return _pages; }
+            set
+            {
+                if (value >= 1) _pages = value;
+            }
+        }
+
+        public void PrintInfo() // метод
+        {
+            Console.WriteLine($"Книга: {Title}, страниц: {Pages}");
+        }
+    }
+
+    // Задание 3
+    public class Rectangle
+    {
+        private double _width; // поле
+        private double _height; // pole
+
+        public double Width // свойство
+        {
+            get { return _width; }
+            set
+            {
+                if (value > 0) _width = value;
+            }
+        }
+
+        public double Height // свойство
+        {
+            get { return _height; }
+            set
+            {
+                if (value > 0) _height = value;
+            }
+        }
+
+        public double Area() // метод
+        {
+            return _width * _height;
+        }
+    }
+
+    // Задание 4
+    public class Student
+    {
+        public string Name; // поле
+        private int _grade; // поле
+
+        public int Grade // свойство
+        {
+            get { return _grade; }
+            set
+            {
+                if (value >= 1 && value <= 5) _grade = value;
+            }
+        }
+
+        public void Print() // метод
+        {
+            Console.WriteLine($"Студент: {Name}, оценка: {Grade}");
+        }
+    }
+
+    // Задание 5
+    public class VvguStudent
+    {
+        public string FullName; // поле
+        private int _course; // поле
+
+        public int Course // свойство
+        {
+            get { return _course; }
+            set
+            {
+                if (value >= 1 && value <= 5) _course = value;
+            }
+        }
+
+        public void ShowVvguCard() // метод
+        {
+            Console.WriteLine($"Студент ВВГУ: {FullName}, Курс: {Course}");
+        }
+    }
+
+    // Главный класс
+    public class Program
+    {
+        // Задание 2
+        public static void ChangeBookTitle(Book b)
+        {
+            b.Title = "Новое название";
+        }
+
+        // Задание 2
+        public static void ReassignBook(Book b)
+        {
+            b = new Book();
+            b.Title = "Другая книга";
+            b.Pages = 300;
+        }
+
+        public static void Main(string[] args)
+        {
+            // Тест 1
+            Book b = new Book();
+            b.Title = "Преступление и наказание";
+            b.Pages = 500;
+            b.PrintInfo();
+
+            // Тест 2
+            ChangeBookTitle(b);
+            b.PrintInfo();
+            ReassignBook(b);
+            b.PrintInfo();
+
+            // Тест 3
+            Rectangle r = new Rectangle();
+            r.Width = 5;
+            r.Height = 10;
+            Console.WriteLine($"Площадь: {r.Area()}");
+
+            // Тест 4
+            Student s = new Student();
+            s.Name = "Иван";
+            s.Grade = 5;
+            s.Print();
+
+            // Тест 5
+            VvguStudent v = new VvguStudent();
+            v.FullName = "Артемьев М. В.";
+            v.Course = 3;
+            v.ShowVvguCard();
+        }
+    }
+}
