@@ -1,0 +1,156 @@
+using System;
+
+namespace VvguStructures
+{
+    // === УРОВЕНЬ 1. БАЗОВЫЕ ЗАДАНИЯ ===
+
+    // Точка на плоскости
+    public struct Point
+    {
+        public double X;
+        public double Y;
+
+        public Point(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        // Расстояние между точками
+        public double DistanceTo(Point other)
+        {
+            return Math.Sqrt(Math.Pow(other.X - X, 2) + Math.Pow(other.Y - Y, 2));
+        }
+    }
+
+    // Прямоугольник
+    public struct Rectangle
+    {
+        public double Width;
+        public double Height;
+
+        public Rectangle(double width, double height)
+        {
+            Width = width;
+            Height = height;
+        }
+
+        public double Area() => Width * Height; // площадь
+        public double Perimeter() => 2 * (Width + Height); // периметр
+    }
+
+    // Книга
+    public struct Book
+    {
+        public string Title;
+        public string Author;
+        public int Year;
+
+        public Book(string title, string author, int year)
+        {
+            Title = title;
+            Author = author;
+            Year = year;
+        }
+
+        public void PrintInfo() // формат: Название — Автор (Год издания)
+        {
+            Console.WriteLine($"{Title} — {Author} ({Year})");
+        }
+    }
+
+    // === УРОВЕНЬ 2. СРЕДНИЕ ЗАДАНИЯ ===
+
+    // Комплексное число
+    public struct ComplexNumber
+    {
+        public double Real;
+        public double Imag;
+
+        public ComplexNumber(double real, double imag)
+        {
+            Real = real;
+            Imag = imag;
+        }
+
+        public ComplexNumber Add(ComplexNumber other) => new ComplexNumber(Real + other.Real, Imag + other.Imag); // сложение
+        public ComplexNumber Subtract(ComplexNumber other) => new ComplexNumber(Real - other.Real, Imag - other.Imag); // вычитание
+        public ComplexNumber Multiply(ComplexNumber other) => new ComplexNumber(Real * other.Real - Imag * other.Imag, Real * other.Imag + Imag * other.Real); // умножение
+
+        public void Print() => Console.WriteLine($"{Real} + {Imag}i");
+    }
+
+    // Цвет RGB
+    public struct Color
+    {
+        public int R;
+        public int G;
+        public int B;
+
+        public Color(int r, int g, int b)
+        {
+            R = r;
+            G = g;
+            B = b;
+        }
+
+        public string ToHex() => $"#{R:X2}{G:X2}{B:X2}"; // перевод в HEX (#RRGGBB)
+    }
+
+    // Дата
+    public struct SimpleDate
+    {
+        public int Day;
+        public int Month;
+        public int Year;
+
+        public SimpleDate(int day, int month, int year)
+        {
+            Day = day;
+            Month = month;
+            Year = year;
+        }
+
+        public bool IsLeapYear() => (Year % 4 == 0 && Year % 100 != 0) || (Year % 400 == 0); // високосный ли год
+    }
+
+    // Главный класс программы
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Тест: Точка на плоскости
+            Point p1 = new Point(0, 0);
+            Point p2 = new Point(3, 4);
+            Console.WriteLine($"Точка 1: ({p1.X}, {p1.Y}), Точка 2: ({p2.X}, {p2.Y})");
+            Console.WriteLine($"Расстояние: {p1.DistanceTo(p2)}");
+
+            // Тест: Прямоугольник
+            Rectangle rect = new Rectangle(5, 10);
+            Console.WriteLine($"\nПрямоугольник: {rect.Width}x{rect.Height}");
+            Console.WriteLine($"Площадь: {rect.Area()}, Периметр: {rect.Perimeter()}");
+
+            // Тест: Книга
+            Book book = new Book("Преступление и наказание", "Ф. Достоевский", 1866);
+            Console.Write("\nКнига: ");
+            book.PrintInfo();
+
+            // Тест: Комплексное число
+            ComplexNumber c1 = new ComplexNumber(1, 2);
+            ComplexNumber c2 = new ComplexNumber(3, 4);
+            Console.Write("\nЧисло 1: "); c1.Print();
+            Console.Write("Число 2: "); c2.Print();
+            Console.Write("Сумма: "); c1.Add(c2).Print();
+            Console.Write("Разность: "); c1.Subtract(c2).Print();
+            Console.Write("Произведение: "); c1.Multiply(c2).Print();
+
+            // Тест: Цвет RGB
+            Color color = new Color(255, 165, 0); // Оранжевый
+            Console.WriteLine($"\nRGB({color.R}, {color.G}, {color.B}) -> HEX: {color.ToHex()}");
+
+            // Тест: Дата
+            SimpleDate date = new SimpleDate(5, 11, 2026);
+            Console.WriteLine($"\nГод {date.Year} високосный? -> {date.IsLeapYear()}");
+        }
+    }
+}
