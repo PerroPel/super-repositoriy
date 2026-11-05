@@ -1,0 +1,81 @@
+using System;
+
+namespace VvguGenerics
+{
+    // Часть 1: Обобщенный класс Box
+    public class Box<T>
+    {
+        private T _item;
+
+        public void Put(T item) // положить
+        {
+            _item = item;
+        }
+
+        public T Get() // достать
+        {
+            return _item;
+        }
+    }
+
+    // Часть 2: Обобщенный метод Swap в классе Utils
+    public static class Utils
+    {
+        public static void Swap<T>(ref T a, ref T b) // меняет местами
+        {
+            T temp = a;
+            a = b;
+            b = temp;
+        }
+    }
+
+    // Часть 3: Пара значений Pair разных типов
+    public class Pair<T1, T2>
+    {
+        public T1 First { get; set; }
+        public T2 Second { get; set; }
+
+        public Pair(T1 first, T2 second)
+        {
+            First = first;
+            Second = second;
+        }
+
+        public void Print() // вывод на экран
+        {
+            Console.WriteLine($"Первое значение: {First}, Второе значение: {Second}");
+        }
+    }
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // === Тест Части 1 ===
+            Box<int> intBox = new Box<int>();
+            intBox.Put(42);
+            Console.WriteLine($"Число в коробке: {intBox.Get()}");
+
+            Box<string> strBox = new Box<string>();
+            strBox.Put("Hello");
+            Console.WriteLine($"Строка в коробке: {strBox.Get()}");
+
+            Console.WriteLine(); // пустая строка
+
+            // === Тест Части 2 ===
+            int num1 = 5, num2 = 10;
+            Utils.Swap(ref num1, ref num2);
+            Console.WriteLine($"Числа после Swap: {num1}, {num2}");
+
+            string str1 = "Hello", str2 = "World";
+            Utils.Swap(ref str1, ref str2);
+            Console.WriteLine($"Строки после Swap: {str1}, {str2}");
+
+            Console.WriteLine(); // пустая строка
+
+            // === Тест Части 3 ===
+            Pair<int, string> pair = new Pair<int, string>(5, "Hello");
+            pair.Print();
+        }
+    }
+}
