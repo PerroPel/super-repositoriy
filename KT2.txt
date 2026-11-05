@@ -1,0 +1,86 @@
+using System;
+
+namespace VvguAccessModifiers
+{
+    // Задача 1
+    public class Student
+    {
+        public string Name; // public: доступен везде
+        private double _gpa; // private: скрыто внутри
+        protected string Status; // protected: для наследников
+        internal string University; // internal: внутри проекта
+
+        public Student(string name, double gpa, string university)
+        {
+            Name = name;
+            _gpa = gpa;
+            University = university;
+            Status = "Active";
+        }
+
+        public void ShowPublicInfo() // public: для вызова снаружи
+        {
+            Console.WriteLine($"Студент: {Name}, Вуз: {University}");
+            CheckGpaStatus(); 
+        }
+
+        private void CheckGpaStatus() // private: внутренняя проверка
+        {
+            if (_gpa < 3.0) UpdateStatus("On Probation");
+        }
+
+        protected void UpdateStatus(string newStatus) // protected: изменение в наследниках
+        {
+            Status = newStatus;
+        }
+
+        internal void ResetUniversity(string newUni) // internal: смена вуза в проекте
+        {
+            University = newUni;
+        }
+    }
+
+    // Задача 2
+    public class AdvancedStudent : Student
+    {
+        public AdvancedStudent(string name, double gpa, string university) 
+            : base(name, gpa, university) { }
+
+        public void Promote()
+        {
+            UpdateStatus("Honors"); // protected метод
+            Console.WriteLine($"Новый статус {Name}: {Status}"); // protected поле
+        }
+    }
+
+    // Задача 3
+    public class StudentManager
+    {
+        public void TransferStudent(Student student, string targetUni)
+        {
+            student.ResetUniversity(targetUni); // internal метод
+        }
+    }
+
+    // Задача 4
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            Student s = new Student("Александр", 2.5, "ВВГУ");
+
+            s.ShowPublicInfo(); // проверка public
+
+            StudentManager manager = new StudentManager();
+            manager.TransferStudent(s, "ВВГУ (Главный корпус)"); // проверка internal
+            s.ShowPublicInfo();
+
+            AdvancedStudent adv = new AdvancedStudent("Роман", 4.9, "ВВГУ");
+            adv.Promote(); // проверка protected
+
+            // Ошибки доступа (скрыты):
+            // s._gpa = 5.0;       // Ошибка: private
+            // s.UpdateStatus(""); // Ошибка: protected
+        }
+    }
+}
